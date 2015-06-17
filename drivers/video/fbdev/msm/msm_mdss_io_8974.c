@@ -1614,6 +1614,18 @@ int mdss_dsi_core_clk_init(struct platform_device *pdev,
 		sdata->mnoc_clk = NULL;
 	}
 
+	sdata->tbu_clk = devm_clk_get(dev, "tbu_clk");
+	if (IS_ERR(sdata->tbu_clk)) {
+		pr_debug("%s: can't find mdp tbu clk. rc=%d\n", __func__, rc);
+		sdata->tbu_clk = NULL;
+	}
+
+	sdata->tbu_rt_clk = devm_clk_get(dev, "tbu_rt_clk");
+	if (IS_ERR(sdata->tbu_rt_clk)) {
+		pr_debug("%s: can't find mdp tbu_rt clk rc=%d\n", __func__, rc);
+		sdata->tbu_rt_clk = NULL;
+	}
+
 error:
 	if (rc)
 		mdss_dsi_core_clk_deinit(dev, sdata);

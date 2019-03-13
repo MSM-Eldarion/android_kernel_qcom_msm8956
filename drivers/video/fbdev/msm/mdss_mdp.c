@@ -1184,7 +1184,8 @@ irqreturn_t mdss_mdp_isr(int irq, void *ptr)
 				mdss_misr_crc_collect(mdata, DISPLAY_MISR_MDP,
 						      true);
 
-			if (isr &  MDSS_MDP_INTR_WB_2_DONE)
+			if (isr & ((mdata->mdp_rev == MDSS_MDP_HW_REV_111) ?
+				MDSS_MDP_INTR_WB_2_DONE >> 2 : MDSS_MDP_INTR_WB_2_DONE))
 				mdss_misr_crc_collect(mdata, DISPLAY_MISR_MDP,
 						      true);
 		}
@@ -2137,11 +2138,23 @@ static void mdss_mdp_hw_rev_caps_init(struct mdss_data_type *mdata)
 		mdata->min_prefill_lines = 12;
 		mdata->props = mdss_get_props();
 		break;
+	case MDSS_MDP_HW_REV_111:
 	case MDSS_MDP_HW_REV_112:
 		mdata->max_target_zorder = 4; /* excluding base layer */
 		mdata->max_cursor_size = 64;
 		mdata->min_prefill_lines = 12;
+		mdata->has_ubwc = true;
+		mdata->apply_post_scale_bytes = false;
+		mdata->hflip_buffer_reused = false;
+		mem_protect_sd_ctrl_id = MEM_PROTECT_SD_CTRL;
+		set_bit(MDSS_QOS_OVERHEAD_FACTOR, mdata->mdss_qos_map);
+		set_bit(MDSS_QOS_PER_PIPE_LUT, mdata->mdss_qos_map);
+		set_bit(MDSS_QOS_SIMPLIFIED_PREFILL, mdata->mdss_qos_map);
+		set_bit(MDSS_CAPS_YUV_CONFIG, mdata->mdss_caps_map);
+		mdss_mdp_init_default_prefill_factors(mdata);
 		set_bit(MDSS_QOS_OTLIM, mdata->mdss_qos_map);
+		mdss_set_quirk(mdata, MDSS_QUIRK_DMA_BI_DIR);
+		mdss_set_quirk(mdata, MDSS_QUIRK_NEED_SECURE_MAP);
 		break;
 	case MDSS_MDP_HW_REV_114:
 		/* disable ECG for 28nm PHY platform */
@@ -4957,6 +4970,7 @@ static void apply_dynamic_ot_limit(u32 *ot_lim,
 		params->is_yuv, params->is_wfd, res, params->frame_rate);
 
 	switch (mdata->mdp_rev) {
+	case MDSS_MDP_HW_REV_111:
 	case MDSS_MDP_HW_REV_114:
 	case MDSS_MDP_HW_REV_115:
 	case MDSS_MDP_HW_REV_116:

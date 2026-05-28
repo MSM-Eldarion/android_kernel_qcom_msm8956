@@ -476,13 +476,6 @@ config ARCH_ZYNQMP
 	help
 	  This enables support for Xilinx ZynqMP Family
 
-config MACH_XIAOMI_MSM8976
-	bool  "XIAOMI platform"
-	depends on ARCH_MSM8976
-	help
-	  Support for the Xiaomi MSM8976 platform
-	  which is based on QCOM MSM8976 chipset.
-
 config MACH_XIAOMI_ELDARION
 	bool  "XIAOMI platform"
 	depends on ARCH_MSM8976
@@ -492,7 +485,7 @@ config MACH_XIAOMI_ELDARION
 
 config MACH_XIAOMI_KENZO
 	bool  "XIAOMI platform"
-	depends on ARCH_MSM8976
+	select MACH_XIAOMI_ELDARION
 	help
 	  Support for the Xiaomi Redmi Note 3 Pro platform
 	  which is based on QCOM MSM8956 chipset.

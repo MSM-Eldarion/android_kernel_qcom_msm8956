@@ -389,6 +389,7 @@ static const struct adreno_reglist a510_hwcg_regs[] = {
 static const struct adreno_a5xx_core adreno_gpu_core_a510 = {
 	.base = {
 		DEFINE_ADRENO_REV(ADRENO_REV_A510, 5, 1, 0, ANY_ID),
+		.features = ADRENO_PREEMPTION | ADRENO_64BIT,
 		.gpudev = &adreno_a5xx_gpudev,
 		.gmem_size = SZ_256K,
 		.busy_mask = 0xfffffffe,

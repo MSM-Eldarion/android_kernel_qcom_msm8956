@@ -183,6 +183,28 @@ static const struct virtual_sensor_data qti_virtual_sensors[] = {
 				"cpuss-usr"},
 		.logic = VIRT_MAXIMUM,
 	},
+#ifdef CONFIG_ARCH_MSM8976
+	{
+		.virt_zone_name = "tetra-cpu-max-step",
+		.num_sensors = 4,
+		.sensor_names = {"apc1-cpu0-usr",
+				"apc1-cpu1-usr",
+				"apc1-l2-usr",
+				"cpuss0-usr"},
+		.logic = VIRT_MAXIMUM,
+	},
+	{
+		.virt_zone_name = "hexa-cpu-max-step",
+		.num_sensors = 6,
+		.sensor_names = {"apc1-cpu0-usr",
+				"apc1-cpu1-usr",
+				"apc1-cpu2-usr",
+				"apc1-cpu3-usr",
+				"apc1-l2-usr",
+				"cpuss0-usr"},
+		.logic = VIRT_MAXIMUM,
+	},
+#else
 	{
 		.virt_zone_name = "hexa-cpu-max-step",
 		.num_sensors = 6,
@@ -194,6 +216,7 @@ static const struct virtual_sensor_data qti_virtual_sensors[] = {
 				"cpuss1-usr"},
 		.logic = VIRT_MAXIMUM,
 	},
+#endif
 };
 
 int qti_virtual_sensor_register(struct device *dev)

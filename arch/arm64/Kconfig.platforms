@@ -490,4 +490,11 @@ config MACH_XIAOMI_ELDARION
 	  Support for the Xiaomi Eldarion platform
 	  which is based on QCOM ELDARION chipset.
 
+config MACH_XIAOMI_KENZO
+	bool  "XIAOMI platform"
+	depends on ARCH_MSM8976
+	help
+	  Support for the Xiaomi Redmi Note 3 Pro platform
+	  which is based on QCOM MSM8956 chipset.
+
 endmenu

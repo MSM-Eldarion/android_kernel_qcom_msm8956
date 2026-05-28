@@ -3684,6 +3684,7 @@ cwb_setup_fail:
 cwb_setup_done:
 	cwb->valid = 0;
 	return 0;
+}
 
 void mdss_mdp_get_interface_type(struct mdss_mdp_ctl *ctl, int *intf_type,
 		int *split_needed)

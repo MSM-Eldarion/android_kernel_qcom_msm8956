@@ -27,4 +27,6 @@ source "crypto/Kconfig"
 
 source "lib/Kconfig"
 
+source "techpack/Kconfig"
+
 source "lib/Kconfig.debug"
